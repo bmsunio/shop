@@ -327,6 +327,7 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
       </div>
       <div class="tg">
         <button type="button" class="tgb" id="tgRes" aria-pressed="false">For sale only</button>
+        <button type="button" class="tgb" id="tgLite" aria-pressed="false" title="Uses less internet data">Lite mode</button>
         <button type="button" class="tgb" id="tgSaved" aria-pressed="false">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20.5s-7-4.4-9.3-9.1A5.4 5.4 0 0 1 12 6.3a5.4 5.4 0 0 1 9.3 5.1C19 16.1 12 20.5 12 20.5z"/></svg>
           Saved <span id="svN"></span>
@@ -335,6 +336,7 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
     </div>
     <div class="cnt"><span id="count"></span><button type="button" id="clear" style="display:none">Clear filters</button></div>
     <div class="grid" id="grid"></div>
+    <div id="moreSold" style="display:none;text-align:center;margin:18px 0"><button type="button" class="btn" id="moreSoldBtn"></button></div>
     <div class="empty" id="empty" style="display:none"><b>Nothing here yet</b><span id="emptyTx">No items match. Try another search or category.</span></div>
   </section>
 
@@ -435,7 +437,7 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
 <script>
 /* Backup text. Only used when shop-data.js has no value for these. */
 var CONFIG={
-  live:'https://script.google.com/macros/s/AKfycbzlb6Lo9-hDA8k7Kc7ZuQjn0CH-KbUz7XjihuOtdsBdCqWk1bjQmYoNKdHH7Q6bww/exec',            // optional: your Apps Script link (the shop-data.js from the app already carries it)
+  live:'https://script.google.com/macros/s/AKfycbw0nAAKN_70DQjYIBbH5ZZUWfzN6UC1r3wr036dGQt6CJsEZIyL0Sk0NrOVIY8IPg5h/exec',            // optional: your Apps Script link (the shop-data.js from the app already carries it)
   store:'Our Shop',
   tagline:'Preloved finds, one of a kind',
   currency:'₱',
@@ -487,6 +489,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 let D,demo,CUR,STORE,OWNER,LOGO,FB,IG,TAG,STEPS,NOTES,TERMS,items,ini,liveURL='',liveState='';
 const ACCENTS={blue:['#2563eb','#60a5fa'],purple:['#7c3aed','#a78bfa'],rose:['#e11d48','#fb7185'],orange:['#ea580c','#fb923c'],teal:['#0f766e','#2dd4bf']};
 function applyAccent(k){let e=document.getElementById('accCss');const a=ACCENTS[k];if(!a){if(e)e.remove();return}if(!e){e=document.createElement('style');e.id='accCss';document.head.appendChild(e)}e.textContent=':root{--ac:'+a[0]+';--onac:#fff}@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--ac:'+a[1]+';--onac:#111}}:root[data-theme=dark]{--ac:'+a[1]+';--onac:#111}'}
+let CLOSED=false,CLOSEDMSG='',POP=null,SOLDAMT=true;
 function setData(src){
   D=src||{};demo=false;
   if(!D.items||!D.items.length){
@@ -498,6 +501,7 @@ function setData(src){
   STORE=D.store||CONFIG.store||'Our Shop';
   OWNER=D.owner||'';LOGO=D.logo||'';FB=D.fb||'';IG=D.ig||'';
   TAG=D.tagline||CONFIG.tagline||'';
+  CLOSED=!!D.closed;CLOSEDMSG=String(D.closedMsg||'');POP=D.popup&&typeof D.popup==='object'?Object.assign({},CONFIG.popup||{},D.popup):CONFIG.popup;SOLDAMT=D.soldAmt!==false;
   STEPS=(CONFIG.useAppSteps&&D.steps&&D.steps.length?D.steps:CONFIG.steps);
   NOTES=(CONFIG.useAppSteps&&D.notes&&D.notes.length?D.notes:CONFIG.notes);
   TERMS=(D.terms&&D.terms.length?D.terms:CONFIG.terms);
@@ -576,7 +580,9 @@ let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on
 function drawLogo(el){el.innerHTML=LOGO?'<img src="'+esc(LOGO)+'" alt="" data-i="'+esc(ini)+'" onerror="this.parentNode.textContent=this.dataset.i">':esc(ini)}
 const stepHTML=(s,i)=>'<li><div class="n">'+(i+1)+'</div><div><b>'+esc(s[0])+'</b><span>'+esc(s[1]||'')+'</span></div></li>';
 function stepsHTML(a,mini){let n=0,sec=0,o='';a.forEach(s=>{const t=String(s[0]);if(t.charAt(0)==='#'){n=0;sec++;if(!mini)o+='<li class="hd">'+esc(t.replace(/^#+\s*/,''))+'</li>';return}if(mini&&sec>1)return;o+=stepHTML(s,n++)});return o}
-function paintText(){
+function paintClosed(){let b=document.getElementById('closedBar');if(!b){b=document.createElement('div');b.id='closedBar';b.setAttribute('role','status');b.style.cssText='background:#b91c1c;color:#fff;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));text-align:center;font-weight:600;font-size:14px;line-height:1.4';document.body.insertBefore(b,document.body.firstChild)}
+  if(CLOSED){b.style.display='';b.textContent=CLOSEDMSG||'We are closed right now. You can still browse, but orders and bids are paused. Please check back soon.'}else b.style.display='none'}
+function paintText(){paintClosed();
   document.title=STORE+(TAG?' | '+TAG:'');
   $('#store').textContent=$('#storeF').textContent=STORE;
   $('#owner').textContent=OWNER;
@@ -610,6 +616,13 @@ function showPage(p){
 
 /* ---------- filters + list ---------- */
 const F={q:'',cat:'',size:'',sort:'new',hideRes:false,saved:false,auc:false};
+/* Lite mode: no grid photos, one photo per item until the buyer asks for more. Starts on for Data Saver or 2G. */
+let LITE=false;try{const v=localStorage.getItem('shop-lite'),cn=navigator.connection||{};LITE=v==='1'||(v===null&&(!!cn.saveData||/^(slow-2g|2g)$/.test(cn.effectiveType||'')))}catch(e){}
+const LITE_OPEN={};let SOLDN=40;
+const aucKey=i=>i.auc?String(i.auc.id||('e'+i.auc.e)):'';
+const AUCSORT=(a,b)=>stOf(a)==='auction'&&stOf(b)==='auction'?((a.auc&&a.auc.e||0)-(b.auc&&b.auc.e||0)):0;
+const SOLDSORT=(a,b)=>stOf(a)==='sold'&&stOf(b)==='sold'&&F.sort==='new'?String(b.sd||'').localeCompare(String(a.sd||'')):0;
+function moreSold(n){const m=$('#moreSold');if(!m)return;if(n>SOLDN){m.style.display='';$('#moreSoldBtn').textContent='Show more sold items ('+(n-SOLDN)+' more)'}else m.style.display='none'}
 let cats=[],sizes=[];
 function paintFilters(){
   cats=Array.from(new Set(items.map(i=>i.category).filter(Boolean))).sort();
@@ -626,11 +639,11 @@ function filtered(){
   const r=items.filter(i=>{
     if(F.cat&&i.category!==F.cat)return false;
     if(F.size&&String(i.size)!==F.size)return false;
-    if(F.auc&&stOf(i)!=='auction')return false; if(F.hideRes&&!canBuy(i))return false;
+    if(F.auc&&(stOf(i)!=='auction'||(F.auc!==true&&aucKey(i)!==F.auc)))return false; if(F.hideRes&&!canBuy(i))return false;
     if(F.saved&&!isSaved(i.id))return false;
     if(q.length){const h=[i.title,i.brand,i.category,i.size,i.condition,i.id].join(' ').toLowerCase();if(!q.every(w=>h.indexOf(w)>-1))return false}
     return true});
-  const rk=i=>({available:0,auction:1,reserved:2,sold:3})[stOf(i)];r.sort((a,b)=>rk(a)-rk(b)||(F.sort==='lo'?a.price-b.price:F.sort==='hi'?b.price-a.price:String(b.added||'').localeCompare(String(a.added||''))));
+  const rk=i=>({available:0,auction:1,reserved:2,sold:3})[stOf(i)];r.sort((a,b)=>rk(a)-rk(b)||AUCSORT(a,b)||SOLDSORT(a,b)||(F.sort==='lo'?a.price-b.price:F.sort==='hi'?b.price-a.price:String(b.added||'').localeCompare(String(a.added||''))));
   return r}
 const isNew=i=>{const t=Date.parse(i.added);return t&&Date.now()-t<=7*864e5&&Date.now()>=t};
 const heartSVG='<svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 20.5s-7-4.4-9.3-9.1A5.4 5.4 0 0 1 12 6.3a5.4 5.4 0 0 1 9.3 5.1C19 16.1 12 20.5 12 20.5z"/></svg>';
@@ -641,21 +654,25 @@ function drawGrid(){ paintDash();
   $('#empty').style.display=r.length?'none':'block';
   $('#empty b').textContent=liveState==='loading'?'Loading items':liveState==='fail'?'Could not load items':'Nothing here yet';
   $('#emptyTx').textContent=liveState==='loading'?'Getting the latest items. One moment.':liveState==='fail'?'Please check your internet connection and refresh the page.':F.saved&&!saved.length?'Tap the heart on an item to save it here.':(items.length?'No items match. Try another search or category.':'No items yet. Please check back soon.');
-  $('#grid').innerHTML=r.map(i=>{
+  const sdl=r.filter(i=>stOf(i)==='sold'),shown=r.filter(i=>stOf(i)!=='sold').concat(sdl.slice(0,SOLDN));moreSold(sdl.length);
+  $('#grid').innerHTML=shown.map(i=>{
     const n=(i.photos||[]).length,im=i.thumb||(i.photos&&i.photos[0])||'',sv=isSaved(i.id);
-    return '<div class="card'+(stOf(i)==='reserved'?' res':stOf(i)==='sold'?' sold':'')+'"><button type="button" class="open" data-id="'+esc(i.id)+'" aria-label="View '+esc([i.brand,i.title].filter(Boolean).join(' '))+', '+ptText(i)+'"><div class="ph">'+(im?'<img loading="lazy"'+ia(im,500)+' alt="">':'<div class="none">No photo</div>')+
+    return '<div class="card'+(stOf(i)==='reserved'?' res':stOf(i)==='sold'?' sold':'')+'"><button type="button" class="open" data-id="'+esc(i.id)+'" aria-label="View '+esc([i.brand,i.title].filter(Boolean).join(' '))+', '+ptText(i)+'"><div class="ph">'+(im&&!LITE?'<img loading="lazy"'+ia(im,stOf(i)==='sold'?240:380)+' alt="">':'<div class="none">'+(im?'Photo hidden to save data':'No photo')+'</div>')+
       '<div class="bd">'+badgeH(i)+'</div>'+
       (n>1?'<span class="np">'+n+' photos</span>':'')+'<span class="pt">'+ptText(i)+'</span></div>'+
       '<div class="ci"><div class="br">'+esc(i.brand||'')+'</div><div class="ti">'+esc(i.title)+'</div><div class="mt">'+esc([i.size&&'Size '+i.size,(i.w&&i.l)?i.w+' × '+i.l+' in':'',i.condition].filter(Boolean).join(' · '))+'</div></div></button>'+
       '<button type="button" class="heart" data-h="'+esc(i.id)+'" aria-pressed="'+sv+'" aria-label="'+(sv?'Remove from saved':'Save item')+'">'+heartSVG+'</button>'+addBtn(i)+'</div>'}).join('');
 }
-function sync(){drawChips();drawGrid();$('#tgSaved').setAttribute('aria-pressed',F.saved);$('#tgRes').setAttribute('aria-pressed',F.hideRes)}
+function sync(){drawChips();drawGrid();$('#tgSaved').setAttribute('aria-pressed',F.saved);$('#tgRes').setAttribute('aria-pressed',F.hideRes);$('#tgLite').setAttribute('aria-pressed',LITE)}
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;F.cat=b.dataset.c;sync()});
 $('#q').addEventListener('input',e=>{F.q=e.target.value;drawGrid();$('#clear').style.display=(F.q||F.cat||F.size||F.hideRes||F.saved||F.auc)?'':'none'});
 $('#sort').addEventListener('change',e=>{F.sort=e.target.value;drawGrid()});
 $('#size').addEventListener('change',e=>{F.size=e.target.value;drawGrid()});
 $('#tgRes').onclick=()=>{F.hideRes=!F.hideRes;sync()};
 $('#tgSaved').onclick=()=>{F.saved=!F.saved;sync()};
+$('#tgLite').onclick=()=>{LITE=!LITE;try{localStorage.setItem('shop-lite',LITE?'1':'0')}catch(e){}sync();toast(LITE?'Lite mode on. Photos load only when you ask.':'Lite mode off.')};
+$('#moreSoldBtn').onclick=()=>{SOLDN+=40;drawGrid()};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-litemore]');if(b){LITE_OPEN[b.dataset.litemore]=1;openItem(b.dataset.litemore,false)}});
 $('#clear').onclick=()=>{Object.assign(F,{q:'',cat:'',size:'',hideRes:false,saved:false,auc:false});$('#q').value='';$('#size').value='';sync()};
 $('#grid').addEventListener('click',e=>{
   const ad=e.target.closest('.addq');if(ad){if(ad.dataset.o){openItem(ad.dataset.o);return}if(inCart(ad.dataset.a))setHash('cart');else addCart(ad.dataset.a);return}
@@ -667,16 +684,16 @@ let cur=null,curK=0;
 const row=(l,v)=>v||v===0?'<div class="r"><span>'+l+'</span><b>'+v+'</b></div>':'';
 function openItem(id,push){
   const i=items.filter(x=>String(x.id)===String(id))[0];if(!i)return;
-  cur=i;curK=0;setTimeout(loadMyBids,300);const ph=i.photos&&i.photos.length?i.photos:(i.thumb?[i.thumb]:[]);
+  cur=i;curK=0;setTimeout(loadMyBids,300);const phAll=i.photos&&i.photos.length?i.photos:(i.thumb?[i.thumb]:[]),ph=(LITE&&!LITE_OPEN[i.id])?phAll.slice(0,1):phAll;
   const name=[i.brand,i.title].filter(Boolean).join(' ');
   const flaw=i.issue&&i.issue!=='None'?esc(i.issue):'';
   $('#shPn').innerHTML=
    '<div class="sh-top"><span>Item code <b>'+esc(i.id)+'</b></span><button type="button" class="x" id="shX" aria-label="Close">✕</button></div>'+
-   '<div class="body"><div class="gal"><div class="car"><div class="cs" id="cs">'+(ph.length?ph.map((p,k)=>'<img'+ia(p,1000)+' alt="'+esc(i.title)+' photo '+(k+1)+'" data-k="'+k+'">').join(''):'<div class="none">No photo yet</div>')+'</div>'+
+   '<div class="body"><div class="gal"><div class="car"><div class="cs" id="cs">'+(ph.length?ph.map((p,k)=>'<img'+(k?' loading="lazy"':'')+ia(p,LITE?640:1000)+' alt="'+esc(i.title)+' photo '+(k+1)+'" data-k="'+k+'">').join(''):'<div class="none">No photo yet</div>')+'</div>'+
      (ph.length>1?'<span class="cn" id="cn">1 / '+ph.length+'</span><button type="button" class="nv l" id="cl" aria-label="Previous photo">‹</button><button type="button" class="nv r" id="cr" aria-label="Next photo">›</button>':'')+
      (ph.length?'<button type="button" class="xb" id="xb" aria-label="View full size"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>':'')+'</div>'+
-     (ph.length>1?'<div class="thumbs" id="th">'+ph.map((p,k)=>'<img'+ia(p,200)+' data-k="'+k+'" class="'+(k?'':'on')+'" alt="">').join('')+'</div>':'')+'</div>'+
-   '<div class="det"><h2>'+esc(name)+'</h2><div class="pr"><span class="big"'+(stOf(i)==='sold'?' style="text-decoration:line-through;opacity:.55"':'')+'>'+ptText(i,1)+'</span><span class="st '+stCls(i)+'">'+stLabel(i)+'</span></div>'+
+     (ph.length>1?'<div class="thumbs" id="th">'+ph.map((p,k)=>'<img loading="lazy"'+ia(p,160)+' data-k="'+k+'" class="'+(k?'':'on')+'" alt="">').join('')+'</div>':'')+(phAll.length>ph.length?'<button type="button" class="btn" data-litemore="'+esc(i.id)+'" style="margin:10px 0;width:100%">Load all '+phAll.length+' photos</button>':'')+'</div>'+
+   '<div class="det"><h2>'+esc(name)+'</h2><div class="pr"><span class="big"'+''+'>'+ptText(i,1)+'</span><span class="st '+stCls(i)+'">'+stLabel(i)+'</span></div>'+
    (flaw?'<div class="flaw"><b>Flaws:</b> '+flaw+'</div>':'')+
    '<div class="rows">'+row('Size',esc(i.size))+row('Brand',esc(i.brand))+row('Category',esc(i.category))+row('Condition',esc(i.condition))+row('Width',i.w?esc(i.w)+' in':'')+row('Length',i.l?esc(i.l)+' in':'')+row('Item code',esc(i.id))+'</div>'+
    aucBox(i)+(stOf(i)==='auction'?bidForm(i):'')+'<div class="order"'+(stOf(i)==='auction'?' style="display:none"':'')+'><h3>Want this item?</h3><div class="cta" id="addw"></div><p class="note" style="margin:10px 0 0">'+orderNote(i)+'</p></div></div></div>';
@@ -720,7 +737,7 @@ function showSt(i){const t=stOf(i),c=CONFIG.show||{},d=(D&&D.show)||{};
   return true}
 const fmtDT=ms=>new Date(ms).toLocaleString('en-PH',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
 const hiOn=i=>!!(i.auc&&i.auc.hi>0&&(CONFIG.show||{}).bid!==false);
-function ptText(i,big){const t=stOf(i);if(t==='sold')return'Sold';if(t==='auction'){const a=i.auc||{};if(hiOn(i))return(big?'':'Bid ')+money(a.hi);if(a.sb>0)return(big?'':'Start ')+money(a.sb);return'Auction'}return money(i.price)}
+function ptText(i,big){const t=stOf(i);if(t==='sold')return i.sp>0&&SOLDAMT?'Sold '+money(i.sp):'Sold';if(t==='auction'){const a=i.auc||{};if(hiOn(i))return(big?'':'Bid ')+money(a.hi);if(a.sb>0)return(big?'':'Start ')+money(a.sb);return'Auction'}return money(i.price)}
 function badgeH(i){const t=stOf(i);return t==='sold'?'<span class="bdg sold">Sold</span>':t==='reserved'?'<span class="bdg res">Reserved</span>':t==='auction'?'<span class="bdg auc">In auction</span>':(isNew(i)?'<span class="bdg">New</span>':'')+(stOf(i)==='available'&&i.qty>1?'<span class="bdg">'+i.qty+' left</span>':'')}
 const stCls=i=>({sold:'sold',reserved:'res',auction:'auc'})[stOf(i)]||'';
 const stLabel=i=>({sold:'Sold',reserved:'Reserved',auction:'In auction'})[stOf(i)]||(i.qty>1?'Available · '+i.qty+' left':'Available');
@@ -765,6 +782,7 @@ function tickCd(){document.querySelectorAll('.cdn').forEach(e=>{const l=+e.datas
 setInterval(tickCd,1000);
 const minBid=i=>{const a=i.auc||{},inc=+a.inc||0;return hiOn(i)?a.hi+inc:(a.sb>0?a.sb:(inc||1))};
 function bidForm(i){const a=i.auc||{},n=Date.now();
+  if(CLOSED)return'<div class="order"><h3>Bidding is paused</h3><p class="note" style="margin:6px 0 0">'+esc(CLOSEDMSG||'The shop is closed right now. Please check back soon.')+'</p></div>';
   if(a.e&&a.e<=n)return'<div class="order"><h3>Bidding has ended</h3><p class="note" style="margin:6px 0 0">Our team is recording the results. Check back soon.</p></div>';
   if(a.s&&n<a.s)return'<div class="order"><h3>Bidding has not started</h3><p class="note" style="margin:6px 0 0">Bidding starts '+esc(fmtDT(a.s))+'.</p></div>';
   const m=minBid(i),inc=+a.inc||0;
@@ -813,7 +831,7 @@ function bidDraw(g,o,W,H,img){
   font(500,18);const note=wrap(o.saved?'Our team will review your bid first. Please send this image to our official Facebook page before bidding ends as proof of your bid. Your bid counts, and shows as the highest bid, only after we accept it. Your address is only asked from the winner.':'Please send this image to our official Facebook page before bidding ends. The highest bid may go up while you bid, so our team will review every bid. Your bid counts only after we confirm it.',W-2*P-40);
   const bh=note.length*26+36;g.strokeStyle='#d4d4d8';g.lineWidth=2;g.strokeRect(P+1,y,W-2*P-2,bh);g.fillStyle='#15201f';font(500,18);note.forEach((t,k)=>g.fillText(t,P+20,y+30+k*26));
   return y+bh+P}
-async function makeBid(){
+async function makeBid(){if(CLOSED){toast('The shop is closed right now, so we cannot take bids.');return}
   const i=cur&&byId(cur.id),er=$('#bErr');
   if(!i||stOf(i)!=='auction'){toast('This item is no longer in an auction.');return}
   const a=i.auc||{},n=Date.now(),m=minBid(i),amt=Math.round(+$('#bAmt').value),nm=$('#bName').value.trim(),tl=$('#bTel').value.trim(),pf=platOf('bPlat'),ac=normAcct(pf,tl);
@@ -862,6 +880,7 @@ function ordFail(r){
   if(r.error==='low'){refreshAuc();return 'Your bid must be at least '+money(r.min)+'. Please raise it and try again.'}
   if(r.error==='ended')return 'Bidding has ended or has not started yet.';
   if(r.error==='limit')return 'You already have requests waiting for our review. Please wait for our team, or message us on Facebook.';
+  if(r.error==='closed')return 'The shop is closed right now, so we cannot take your order or bid. Please check back soon.';
   if(r.error==='blocked')return 'We could not take this right now. Please message us on our Facebook page.';
   if(r.error==='bad')return r.msg||'Please check your details and try again.';
   return 'Could not send this. Please check your internet connection and try again.'}
@@ -879,12 +898,12 @@ const sheetQty=(q,mx)=>'<div class="qty"><button type="button" data-sq="-1" aria
 const cartQty=(i,q)=>'<div class="qty"><button type="button" data-cq="'+esc(i.id)+'" data-d="-1" aria-label="Fewer"'+(q<=1?' disabled':'')+'>\u2212</button><span>'+q+'</span><button type="button" data-cq="'+esc(i.id)+'" data-d="1" aria-label="More"'+(q>=stockOf(i)?' disabled':'')+'>+</button></div>';
 const canPrune=()=>liveState==='done'||!liveURL;
 function setQty(id,q,say){const i=byId(id);if(!i||!canBuy(i))return;q=Math.min(stockOf(i),Math.max(0,Math.floor(+q||0)));const k=cIdx(id);if(q<1){if(k>-1)cart.splice(k,1)}else if(k>-1)cart[k].q=q;else cart.push({id:String(id),q:q});saveCart();if(say)toast(q>1?q+' in your cart':'Added to your cart');cartChanged()}
-function addCart(id){const i=byId(id);if(!i||!canBuy(i)||inCart(id))return;setQty(id,1,1)}
+function addCart(id){if(CLOSED){toast('The shop is closed right now.');return}const i=byId(id);if(!i||!canBuy(i)||inCart(id))return;setQty(id,1,1)}
 function delCart(id){cart=cart.filter(x=>x.id!==String(id));saveCart();cartChanged()}
 function cartChanged(){const b=$('#mk');if(b){b.disabled=false;delete b.dataset.busy}paintCart();drawGrid();paintAdd()}
-function addBtn(i){const t=stOf(i);if(t==='sold')return'<button type="button" class="addq" disabled>Sold</button>';if(t==='reserved')return'<button type="button" class="addq" disabled>Reserved</button>';if(t==='auction')return'<button type="button" class="addq" data-o="'+esc(i.id)+'">Place a bid</button>';const c=inCart(i.id);return '<button type="button" class="addq'+(c?' in':'')+'" data-a="'+esc(i.id)+'"'+(i.res?' disabled':'')+'>'+(i.res?'Reserved':c?'In cart'+(qIn(i.id)>1?' ('+qIn(i.id)+')':'')+' ✓ View cart':'Add to cart')+'</button>'}
+function addBtn(i){const t=stOf(i);if(CLOSED&&t!=='sold')return'<button type="button" class="addq" disabled>Shop closed</button>';if(t==='sold')return'<button type="button" class="addq" disabled>Sold</button>';if(t==='reserved')return'<button type="button" class="addq" disabled>Reserved</button>';if(t==='auction')return'<button type="button" class="addq" data-o="'+esc(i.id)+'">Place a bid</button>';const c=inCart(i.id);return '<button type="button" class="addq'+(c?' in':'')+'" data-a="'+esc(i.id)+'"'+(i.res?' disabled':'')+'>'+(i.res?'Reserved':c?'In cart'+(qIn(i.id)>1?' ('+qIn(i.id)+')':'')+' ✓ View cart':'Add to cart')+'</button>'}
 function paintAdd(){const w=$('#addw');if(!w||!cur)return;
-  const t=stOf(cur);if(t==='sold'||t==='reserved'){w.innerHTML='<button type="button" class="btn" disabled style="opacity:.5">'+(t==='sold'?'Sold':'Reserved')+'</button>';return}
+  const t=stOf(cur);if(t==='sold'||t==='reserved'||CLOSED){w.innerHTML='<button type="button" class="btn" disabled style="opacity:.5">'+(t==='sold'?'Sold':t==='reserved'?'Reserved':'Shop closed')+'</button>';return}
   if(t==='auction'){w.innerHTML=(FB?'<a class="btn" href="'+esc(FB)+'" target="_blank" rel="noopener">Bid on Facebook</a>':'')+(IG?'<a class="btn g" href="'+esc(IG)+'" target="_blank" rel="noopener">Instagram</a>':'');return}
   const mx=stockOf(cur),have=qIn(cur.id);if(paintAdd.id!==cur.id){paintAdd.id=cur.id;paintAdd.q=have||1}paintAdd.q=Math.max(1,Math.min(mx,paintAdd.q||1));
   const sel=mx>1?'<div class="qrow"><span>Quantity</span>'+sheetQty(paintAdd.q,mx)+'<small>'+mx+' in stock</small></div>':'';
@@ -933,7 +952,7 @@ function slipDraw(g,o,W,H){
   font(500,18);const note=wrap(o.saved?'Our team will review your order first. Please send this image to our official Facebook page as proof that you ordered. Your order is confirmed only after we accept it, then we will message you the shipping fee and payment details.':'Please send this image to our official Facebook page or Instagram to place your order. Our team will confirm availability, the shipping fee and payment with you.',W-2*P-40);
   const bh=note.length*26+36;g.strokeStyle='#d4d4d8';g.lineWidth=2;g.strokeRect(P+1,y,W-2*P-2,bh);g.fillStyle='#15201f';font(500,18);note.forEach((t,k)=>g.fillText(t,P+20,y+30+k*26));
   return y+bh+P}
-async function makeSlip(){
+async function makeSlip(){if(CLOSED){toast('The shop is closed right now, so we cannot take orders.');return}
   const nm=$('#cName').value.trim(),ph=$('#cPhone').value.trim(),ad=$('#cAddr').value.trim().replace(/\s*\n\s*/g,', '),tl=$('#cTel').value.trim(),er=$('#cErr'),pf=platOf('cPlat'),ac=normAcct(pf,tl);
   const bad=nm.length<2?'Please enter your full name.':!phoneOk(ph)?'Please enter a valid contact number.':ad.length<8?'Please enter your complete address.':ac.err||'';
   er.style.display=bad?'block':'none';er.textContent=bad;if(bad)return;
@@ -989,11 +1008,11 @@ function loadLive(quiet){
   if(!liveURL)return;
   const cb='shopLive'+Date.now(),sc=document.createElement('script');let done=false;
   const fail=()=>{if(done)return;done=true;sc.remove();if(quiet&&liveState==='done')return;
-    liveState='fail';setData(window.SHOP_DATA);paintText();paintFilters();sync();paintCart()};
+    liveState='fail';setData(window.SHOP_DATA);paintText();paintFilters();sync();paintCart();guideOnce()};
   window[cb]=function(r){if(done)return;done=true;sc.remove();try{delete window[cb]}catch(e){}
     if(!(r&&r.items)){done=false;fail();return}
     const js=JSON.stringify(r);if(quiet&&liveState==='done'&&js===loadLive.last)return;
-    loadLive.last=js;liveState='done';setData(r);paintText();paintFilters();sync();paintCart();refreshAuc();loadMyBids();route()};
+    loadLive.last=js;liveState='done';setData(r);paintText();paintFilters();sync();paintCart();refreshAuc();loadMyBids();route();guideOnce()};
   sc.onerror=fail;setTimeout(fail,15000);
   sc.src=liveURL+(liveURL.indexOf('?')>-1?'&':'?')+'action=shop&callback='+cb+'&t='+Date.now();
   document.head.appendChild(sc);
@@ -1002,14 +1021,18 @@ function loadLive(quiet){
 /* live auction dashboard */
 function paintDash(){const e=$('#aucDash');if(!e)return;const n=Date.now(),L=items.filter(i=>stOf(i)==='auction'&&i.auc&&i.auc.e>n&&(!i.auc.s||i.auc.s<=n));
   if(!L.length){e.style.display='none';e.innerHTML='';if(F.auc){F.auc=false}return}
-  const end=Math.min.apply(null,L.map(i=>i.auc.e));
-  e.style.display='';e.innerHTML='<div class="ad-top"><span class="ad-live"><i></i>LIVE AUCTION</span><span class="ad-n">'+L.length+' item'+(L.length>1?'s':'')+'</span></div><div class="ad-cd"><span>Ends in</span><b class="cdn" data-e="'+end+'"></b></div><div class="ad-ends">Ends '+esc(fmtDT(end))+'</div><button type="button" class="btn" id="aucGo">'+(F.auc?'Show all items':'View auction items')+'</button>';tickCd()}
-$('#aucDash').addEventListener('click',ev=>{if(!ev.target.closest('#aucGo'))return;F.auc=!F.auc;sync();const g=$('#grid');if(g&&g.scrollIntoView)g.scrollIntoView({behavior:'smooth',block:'start'})});
+  const G={};L.forEach(i=>{const k=aucKey(i);(G[k]=G[k]||{k:k,e:i.auc.e,nm:i.auc.nm||'',L:[]}).L.push(i)});
+  const gs=Object.keys(G).map(k=>G[k]).sort((a,b)=>a.e-b.e);
+  if(F.auc!==true&&F.auc&&!G[F.auc])F.auc=false;
+  e.style.display='';e.innerHTML=gs.map((g,x)=>'<div'+(x?' style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.28)"':'')+'><div class="ad-top"><span class="ad-live"><i></i>LIVE AUCTION'+(gs.length>1?' · '+esc(g.nm||('Auction '+(x+1))):'')+'</span><span class="ad-n">'+g.L.length+' item'+(g.L.length>1?'s':'')+'</span></div><div class="ad-cd"><span>Ends in</span><b class="cdn" data-e="'+g.e+'"></b></div><div class="ad-ends">Ends '+esc(fmtDT(g.e))+'</div><button type="button" class="btn aucGo" data-k="'+esc(g.k)+'">'+(F.auc===g.k?'Show all items':'View auction items')+'</button></div>').join('');tickCd()}
+$('#aucDash').addEventListener('click',ev=>{const b=ev.target.closest('.aucGo');if(!b)return;F.auc=(F.auc===b.dataset.k)?false:b.dataset.k;sync();const g=$('#grid');if(g&&g.scrollIntoView)g.scrollIntoView({behavior:'smooth',block:'start'})});
 
 /* guide popup */
 let gdWired=false;
+let gdDone=false;function guideOnce(){if(gdDone)return;gdDone=true;showGuide()}
 function showGuide(){
-  const P=CONFIG.popup;if(!P||P.on===false)return;
+  const P=POP||CONFIG.popup;if(!P||P.on===false)return;const md=P.mode||'once';if(md==='off')return;
+  try{const v=localStorage.getItem('shop-guide-seen');if(md==='once'&&v)return;if(md==='daily'&&v===new Date().toISOString().slice(0,10))return}catch(e){}
   const gd=$('#gd'),ok=$('#gdOk'),go=$('#gdGo'),rd=$('#gdRead');
   if(!gd||!ok||!go||!rd)return;
   $('#gdT').textContent=P.title||'';
@@ -1030,9 +1053,9 @@ function showGuide(){
   }
   setTimeout(()=>{try{ok.focus()}catch(e){}},60);
 }
-function closeGuide(){const gd=$('#gd');if(gd)gd.style.display='none';document.body.style.overflow=''}
+function closeGuide(){try{localStorage.setItem('shop-guide-seen',new Date().toISOString().slice(0,10))}catch(e){}const gd=$('#gd');if(gd)gd.style.display='none';document.body.style.overflow=''}
 
-paintText();paintFilters();sync();paintCart();route();loadLive();showGuide();
+paintText();paintFilters();sync();paintCart();route();loadLive();if(liveURL)setTimeout(guideOnce,2500);else guideOnce();
 setInterval(()=>{if(!document.hidden)loadLive(true)},60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadLive(true)});
 })();
