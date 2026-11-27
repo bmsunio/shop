@@ -369,6 +369,34 @@ footer .soc,footer .copy{flex-basis:100%;margin-top:0}.soc:empty,.copy:empty{dis
 .apn h3{font-size:22px}
 .apn .hd2{margin-bottom:16px}
 }
+
+/* footer: one centered block, round social icons */
+footer .wrap{flex-direction:column;align-items:center;text-align:center;gap:14px}
+footer .soc,footer .copy{flex-basis:auto;margin:0}
+footer .soc{justify-content:center;gap:12px}
+footer .soc a{width:44px;height:44px}
+@media(max-width:760px){footer{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}body.hasbar #toast{bottom:170px!important}}
+/* cart tab */
+.tabs a[data-p=cart] .tb{display:inline-block;min-width:20px;height:20px;line-height:20px;border-radius:10px;background:var(--tag);color:var(--tagx);font:800 12px/20px var(--hd);padding:0 6px;margin-left:4px;font-style:normal;vertical-align:middle}
+.tabs a[data-p=cart].has{color:var(--tx);background:color-mix(in srgb,var(--tag) 24%,transparent);border-radius:10px 10px 0 0}
+/* floating cart bar */
+#cartBar{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 96px);z-index:39;max-width:560px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--ink);color:var(--bg);border-radius:16px;padding:12px 16px;text-decoration:none;font-weight:700;box-shadow:0 12px 30px -10px rgba(0,0,0,.5)}
+#cartBar .cn{display:flex;align-items:center;gap:10px;min-width:0}
+#cartBar .cb2{min-width:26px;height:26px;border-radius:13px;background:var(--tag);color:var(--tagx);font:800 14px/26px var(--hd);text-align:center;padding:0 7px;font-style:normal}
+#cartBar b{font:800 17px var(--hd);white-space:nowrap}
+@media(min-width:761px){#cartBar{bottom:20px}}
+/* cart steps and headings */
+.cst{list-style:none;display:flex;gap:6px;margin:14px 0 6px;padding:0}
+.cst li{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;font-size:12.5px;font-weight:700;color:var(--mu)}
+.cst i,h3.sh i{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);font:800 14px/28px var(--hd);font-style:normal;text-align:center}
+h3.sh,.panel h3.sh{display:flex;align-items:center;gap:10px;font:800 18px var(--hd);margin:18px 0 8px}
+/* bigger cart cards */
+.crow{align-items:flex-start;gap:14px;padding:12px;border-radius:16px;border:1.5px solid var(--ln);margin:12px 0}
+.crow img,.crow .none{flex:0 0 92px;width:92px;height:118px;border-radius:12px}
+.crow .i b{font-size:16px;line-height:1.3}.crow .i span{font-size:13px}
+.crow .cf{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+.crow .p{font:800 20px var(--hd)}
+.rm{width:auto;height:40px;padding:0 16px;border-radius:999px;background:transparent;border:1.5px solid #c0392b;color:#c0392b;font:700 14px var(--bd)}
 </style>
 </head>
 <body>
@@ -444,17 +472,20 @@ footer .soc,footer .copy{flex-basis:100%;margin-top:0}.soc:empty,.copy:empty{dis
   <!-- CART -->
   <section id="p-cart" class="page" style="display:none">
     <h2>Your cart</h2>
+    <ol class="cst" id="cartSteps" style="display:none"><li><i>1</i>Review items</li><li><i>2</i>Your details</li><li><i>3</i>Send order</li></ol>
     <p class="sub" id="cartSub"></p>
     <div class="empty" id="cartEmpty" style="display:none"><b>Your cart is empty</b><span id="cartEmptyTx">Tap Add to cart on any item you like.</span><div class="cta" style="justify-content:center"><a class="btn" href="#shop">Browse items</a></div></div>
+    <h3 class="sh" id="cartH1" style="display:none"><i>1</i>Review your items</h3>
     <div id="cartList"></div>
     <div class="tot" id="cartTot"></div>
     <div class="panel form" id="orderForm">
-      <h3>Your details</h3>
+      <h3 class="sh"><i>2</i>Enter your details</h3>
       <label for="cName">Full name</label><input id="cName" autocomplete="name">
       <label for="cPhone">Contact number</label><input id="cPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="09XX XXX XXXX">
       <label for="cAddr">Complete address</label><textarea id="cAddr" autocomplete="street-address" placeholder="House no., street, barangay, city, province, ZIP code"></textarea>
       <label id="cPlatL">Your social account (so we can find you)</label><div class="seg" id="cPlat" role="radiogroup" aria-labelledby="cPlatL"><button type="button" role="radio" aria-checked="true" data-p="fb">Facebook</button><button type="button" role="radio" aria-checked="false" data-p="ig">Instagram</button></div><input id="cTel" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="Facebook or Instagram link or username" style="margin-top:8px"><p class="hint" id="cTelH"></p>
       <input id="cWeb" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"><p class="er" id="cErr" role="alert"></p>
+      <h3 class="sh" style="margin-top:20px"><i>3</i>Send your order</h3>
       <div class="cta"><button type="button" class="btn" id="mk">Place my order</button></div>
       <p class="note" style="margin:10px 0 0" id="mkNote">Our team will review your order first. We only use your details for your order.</p>
     </div>
@@ -500,10 +531,11 @@ footer .soc,footer .copy{flex-basis:100%;margin-top:0}.soc:empty,.copy:empty{dis
 <footer>
   <div class="wrap">
     <a class="brand" href="#shop"><span class="logo" id="logoF"></span><span class="bn"><b id="storeF"></b><small id="foot"></small></span></a>
-    <nav><a href="#shop">Shop</a><a href="#how">How to order</a><a href="#terms">Terms &amp; policies</a></nav>
     <div class="soc" id="soc"></div><p class="copy" id="copy"></p>
   </div>
 </footer>
+
+<a id="cartBar" href="#cart" aria-label="View cart" style="display:none"></a>
 
 <div id="acct" role="dialog" aria-modal="true" aria-label="My orders and profile"><div class="ov" id="acctOv"></div><div class="apn" id="acctPn"></div></div>
 
@@ -547,11 +579,12 @@ var CONFIG={
   currency:'₱',
   useAppSteps:false,
   popup:{on:true,title:'Please read our guide first',intro:'It takes less than a minute and helps your order or bid get accepted.',
-    points:['Choose your items and enter your name, contact number, complete address, and your Facebook or Instagram account. To bid, you only need your name and your Facebook or Instagram account.','Save the order or bid image that appears after you send.','Send the image to our page on Messenger. For bids, you can comment the image on the item post instead. Without the image, we cannot accept your order or bid.','Pay by GCash only after we confirm your order.'],
+    points:['Fill out your profile first: tap the account icon at the top, open Profile, and save your name, contact number, complete address and Facebook or Instagram account. It fills in your orders for you.','Choose your items and enter your name, contact number, complete address, and your Facebook or Instagram account. To bid, you only need your name and your Facebook or Instagram account.','Save the order or bid image that appears after you send.','Send the image to our page on Messenger. For bids, you can comment the image on the item post instead. Without the image, we cannot accept your order or bid.','Pay by GCash only after we confirm your order.'],
     tick:'I have read the guide',button:'Continue to shop',link:'Read the full guide'},
   show:{sold:true,reserved:true,auction:true,bid:true},
   steps:[
     ['#Ordering',''],
+    ['Fill out your profile (one time).','Tap the account icon at the top, open the Profile tab, and save your name, contact number, complete address and Facebook or Instagram account. It is saved only on your phone and fills in your orders for you.'],
     ['Add the items you want to your cart.','Tap Add to cart on each item you like. Most pieces are one of a kind. If an item has more than one piece, choose how many you want, up to what we have in stock.'],
     ['Enter your details.','Open your cart, then type your name, contact number and complete address. Choose Facebook or Instagram and paste your profile link so we can find you.'],
     ['Create and save your order image.','Tap Create my order image, then save it to your phone.'],
@@ -567,6 +600,7 @@ var CONFIG={
     ['Wait for the result.','When the auction ends, the highest accepted bid wins and we will message you. Then pay by GCash.']
   ],
   notes:[
+    'Tip: save your details once in the account icon (Profile) so you do not have to type them again on every order.',
     'Send your order image on Messenger as soon as you can. For bids, comment the bid image on the post of the item, or send it on Messenger. Orders and bids without the image are rejected.',
     'Choose Facebook or Instagram and paste your profile link (or type your username) exactly, so we can find you. Orders also need an active contact number. Bids do not need a phone number or address; we only ask the winner for those.',
     'Most items are one of a kind. When the stock is gone, it is gone.',
@@ -712,7 +746,7 @@ function paintSite(){const s=SITE||{};
       const g=document.createElement('button');g.type='button';g.className='go';g.textContent=h.btn||'';g.onclick=()=>{const gr=document.getElementById('grid');if(gr)gr.scrollIntoView({behavior:'smooth',block:'start'})};tx.appendChild(g);
       w.appendChild(tx);hb.appendChild(w)}}}
   const f=s.foot||{},soc=document.getElementById('soc'),cp=document.getElementById('copy');
-  if(soc){soc.innerHTML='';if(f.on!==false)['fb','ig','tt'].forEach(k=>{const u=/^https?:\/\//i.test(String(f[k]||'').trim())?String(f[k]).trim():'';if(!u)return;const l=document.createElement('a');l.href=u;l.target='_blank';l.rel='noopener noreferrer';l.setAttribute('aria-label',SOC_NM[k]);l.innerHTML=SOC_IC[k];soc.appendChild(l)})}
+  if(soc){soc.innerHTML='';if(f.on!==false)['fb','ig','tt'].forEach(k=>{const raw=String(f[k]||(k==='fb'?FB:k==='ig'?IG:'')||'').trim(),u=/^https?:\/\//i.test(raw)?raw:'';if(!u)return;const l=document.createElement('a');l.href=u;l.target='_blank';l.rel='noopener noreferrer';l.setAttribute('aria-label',SOC_NM[k]);l.innerHTML=SOC_IC[k];soc.appendChild(l)})}
   if(cp){cp.textContent=f.on!==false&&f.text?f.text:''}}
 function alsoH(i){const w=(SITE&&SITE.also)||{};if(w.on===false||!SITE)return'';const n=Math.max(2,Math.min(8,+w.n||4));
   const L=items.filter(x=>x.id!==i.id&&stOf(x)!=='sold'&&showSt(x)).sort((a,b)=>(b.category===i.category)-(a.category===i.category)).slice(0,n);if(!L.length)return'';
@@ -761,8 +795,9 @@ function showPage(p){
   if(['shop','how','terms','cart'].indexOf(p)<0)p='shop';
   ['shop','how','terms','cart'].forEach(k=>{$('#p-'+k).style.display=k===p?'':'none'});
   $$('.tabs a').forEach(a=>a.classList.toggle('on',a.dataset.p===p));
-  if(curPage!==p){try{window.scrollTo(0,0)}catch(e){}}curPage=p;if(p==='cart')paintCart();
+  if(curPage!==p){try{window.scrollTo(0,0)}catch(e){}}curPage=p;if(p==='cart')paintCart();paintBar();
 }
+function paintBar(){const b=document.getElementById('cartBar');if(!b)return;const c=window.cartSum||{pcs:0,tot:0},on=c.pcs>0&&curPage!=='cart';b.style.display=on?'':'none';document.body.classList.toggle('hasbar',on);if(on)b.innerHTML='<span class="cn"><i class="cb2">'+c.pcs+'</i>View cart · '+c.pcs+(c.pcs>1?' items':' item')+'</span><b>'+money(c.tot)+' ›</b>'}
 
 /* ---------- filters + list ---------- */
 const F={q:'',cat:'',size:'',sort:'new',stock:'',saved:false,auc:false};
@@ -1075,14 +1110,14 @@ function paintAdd(){const w=$('#addw');if(!w||!cur)return;
 function paintCart(){
   if(canPrune()){let low=0;const k=cart.filter(x=>{const i=byId(x.id);return i&&canBuy(i)});k.forEach(x=>{const mx=stockOf(byId(x.id));if(x.q>mx){x.q=mx;low=1}});if(k.length!==cart.length)toast('Some items in your cart were sold or reserved, so they were removed.');else if(low)toast('Some quantities were lowered because our stock changed.');if(k.length!==cart.length||low){cart=k;saveCart()}}
   const L2=cart.map(x=>({i:byId(x.id),q:x.q})).filter(x=>x.i),n=L2.length,pcs=L2.reduce((a,x)=>a+x.q,0),tot=L2.reduce((a,x)=>a+(+x.i.price||0)*x.q,0);
-  const b=$('#cartN');b.textContent=cartPcs();b.style.display=cart.length?'':'none';$('#cartT').textContent=cart.length?'('+cartPcs()+')':'';
+  const b=$('#cartN');b.textContent=cartPcs();b.style.display=cart.length?'':'none';$('#cartT').innerHTML=cart.length?'<i class="tb">'+cartPcs()+'</i>':'';$('#cartT').parentNode.classList.toggle('has',!!cart.length);
   $('#cartSub').textContent=n?'Check your items, then fill in your details.':'';
   $('#cartEmpty').style.display=n?'none':'';
   $('#cartEmptyTx').textContent=!canPrune()&&cart.length?'Loading your items…':'Tap Add to cart on any item you like.';
-  ['cartList','cartTot','orderForm'].forEach(k=>$('#'+k).style.display=n?'':'none');
+  ['cartList','cartTot','orderForm','cartH1','cartSteps'].forEach(k=>$('#'+k).style.display=n?'':'none');window.cartSum={pcs:pcs,tot:tot};paintBar();
   if(!n)$('#slip').style.display='none';
   $('#cartList').innerHTML=L2.map(({i,q})=>{const im=i.thumb||(i.photos&&i.photos[0])||'';
-    return '<div class="crow">'+(im?'<img'+ia(im,200)+' alt="">':'<div class="none"></div>')+'<div class="i"><b>'+esc([i.brand,i.title].filter(Boolean).join(' '))+'</b><span>'+esc([i.size&&'Size '+i.size,'Code '+i.id].filter(Boolean).join(' · '))+'</span>'+(stockOf(i)>1?'<div class="q2">'+cartQty(i,q)+'<em>'+(q>1?money(i.price)+' each · ':'')+stockOf(i)+' in stock</em></div>':'')+'</div><div class="p">'+money((+i.price||0)*q)+'</div><button type="button" class="rm" data-rm="'+esc(i.id)+'" aria-label="Remove from cart">✕</button></div>'}).join('');
+    return '<div class="crow">'+(im?'<img'+ia(im,200)+' alt="">':'<div class="none"></div>')+'<div class="i"><b>'+esc([i.brand,i.title].filter(Boolean).join(' '))+'</b><span>'+esc([i.size&&'Size '+i.size,'Code '+i.id].filter(Boolean).join(' · '))+'</span>'+(stockOf(i)>1?'<div class="q2">'+cartQty(i,q)+'<em>'+(q>1?money(i.price)+' each · ':'')+stockOf(i)+' in stock</em></div>':'')+'<div class="cf"><div class="p">'+money((+i.price||0)*q)+'</div><button type="button" class="rm" data-rm="'+esc(i.id)+'" aria-label="Remove from cart">Remove</button></div></div></div>'}).join('');
   $('#cartTot').innerHTML='<div class="r"><span>Items ('+pcs+')</span><b>'+money(tot)+'</b></div><div class="r"><span>Shipping</span><b>To be confirmed</b></div><div class="r"><span>Total</span><b class="gt">'+money(tot)+'</b></div><p class="note" style="margin:6px 0 0">Shipping fee is added after our team confirms your address.</p>';
   [['#fbSlip',FB],['#igSlip',IG]].forEach(x=>{const a=$(x[0]);if(x[1]){a.href=x[1];a.style.display=''}else a.style.display='none'});
   if(!$('#cName').value)$('#cName').value=cust.name||'';if(!$('#cPhone').value)$('#cPhone').value=cust.phone||'';if(!$('#cAddr').value)$('#cAddr').value=cust.addr||'';if(!$('#cTel').value)$('#cTel').value=cust.acct||'';if(!paintCart.pl){paintCart.pl=1;setPlat('cPlat',cust.plat)}const mkb=$('#mk');if(mkb&&!mkb.dataset.busy){mkb.textContent=ordersOn()?'Place my order':'Create my order image'}
