@@ -541,7 +541,7 @@ footer .soc,footer .copy{flex-basis:100%;margin-top:0}.soc:empty,.copy:empty{dis
 <script>
 /* Backup text. Only used when shop-data.js has no value for these. */
 var CONFIG={
-  live:'https://script.google.com/macros/s/AKfycbxtJvN-p04E9t7wSgMap-w2ZIriN0zUi4lCXqb_zIRl3c0lc8OsL9815rf5xi6OdgIW/exec',            // optional: your Apps Script link (the shop-data.js from the app already carries it)
+  live:'https://script.google.com/macros/s/AKfycbwFPpSkoD5ltyFBnrJoI7X2xE4cYlTy-EdmP_YDJ-F-p4pabr966se5aeuu3OX4nys/exec',            // optional: your Apps Script link (the shop-data.js from the app already carries it)
   store:'Our Shop',
   tagline:'Preloved finds, one of a kind',
   currency:'₱',
@@ -687,19 +687,25 @@ function stepsHTML(a,mini){let n=0,sec=0,o='';a.forEach(s=>{const t=String(s[0])
 function safeU(u){u=String(u||'').trim();return /^(https?:\/\/[^\s"'<>]+|[\w\-./%]+)$/i.test(u)?u:''}
 const SOC_IC={fb:'<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.3 0-3.9 1.4-3.9 4v2.2H8v3h2.5V21z"/></svg>',ig:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg>',tt:'<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.3 2.2 1.6 3.6 3.7 3.8v3c-1.3.1-2.5-.3-3.7-1.1v5.6c0 3.5-2.5 5.7-5.5 5.7-3 0-5.4-2.3-5.4-5.3 0-3.2 2.7-5.5 6-5.1v3.1c-1.5-.4-2.9.5-2.9 2 0 1.2 1 2.2 2.2 2.2 1.4 0 2.3-.9 2.3-2.5V3z"/></svg>'};
 const SOC_NM={fb:'Facebook',ig:'Instagram',tt:'TikTok'};
+const HVC={};
+function heroBlob(id,cb){if(HVC[id])return cb(HVC[id]);const fn='__hv'+Date.now(),sc=document.createElement('script');
+  const done=u=>{try{delete window[fn]}catch(e){window[fn]=undefined}sc.remove();cb(u)};
+  window[fn]=r=>{if(r&&r.ok&&r.data){try{const b=atob(r.data),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);HVC[id]=URL.createObjectURL(new Blob([a],{type:r.mime||'video/mp4'}));done(HVC[id])}catch(e){done('')}}else done('')};
+  sc.onerror=()=>done('');sc.src=liveURL+(liveURL.indexOf('?')>-1?'&':'?')+'action=herovideo&id='+encodeURIComponent(id)+'&callback='+fn+'&t='+Date.now();document.head.appendChild(sc)}
 function paintSite(){const s=SITE||{};
   let b=document.getElementById('annBar');if(!b){b=document.createElement('div');b.id='annBar';b.setAttribute('role','note');b.style.cssText='background:#18181b;color:#fff;text-align:center;font-weight:700;letter-spacing:.04em;font-size:13px;padding:9px 14px';const t=document.querySelector('header.top');document.body.insertBefore(b,t)}
   const a=s.ann||{};if(a.on){b.style.display='';b.textContent=a.text||''}else b.style.display='none';
   const h=s.hero||{},hb=document.getElementById('heroB');
   if(hb){const sig=JSON.stringify([h,LITE]);if(hb.dataset.sig!==sig){hb.dataset.sig=sig;hb.innerHTML='';
-    if(h.on&&(h.video||h.poster||h.title)){const w=document.createElement('div');w.className='herob';const vu=safeU(h.video),pu=safeU(h.poster);
-      if(pu){const im=document.createElement('img');im.className='pst';im.alt='';im.src=pu;w.appendChild(im)}
+    if(h.on&&(h.video||h.poster||h.title)){const w=document.createElement('div');w.className='herob';const vu=safeU(h.video),pm=String(h.poster||'').match(/^gd:([\w-]+)$/),pu=pm?'https://drive.google.com/thumbnail?id='+pm[1]+'&sz=w1600':safeU(h.poster);
+      if(pu){const im=document.createElement('img');im.className='pst';im.alt='';im.referrerPolicy='no-referrer';im.src=pu;w.appendChild(im)}
       if(vu&&!LITE){const v=document.createElement('video');v.muted=true;v.defaultMuted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.preload='auto';if(pu)v.poster=pu;
         const dm=vu.match(/[?&]id=([\w-]+)/)||vu.match(/\/d\/([\w-]+)/),cand=[vu];if(dm&&/google/.test(vu)){cand.push('https://drive.google.com/uc?export=download&id='+dm[1]);cand.push('https://drive.usercontent.google.com/download?id='+dm[1]+'&export=download&confirm=t')}
         let ci=0;const go1=()=>{if(ci>=cand.length){v.remove();return}v.src=cand[ci++];v.load();const p=v.play&&v.play();if(p&&p.catch)p.catch(()=>{})};
         v.addEventListener('error',go1);v.addEventListener('canplay',()=>{if(v.paused){const p=v.play();if(p&&p.catch)p.catch(()=>{})}});
         const kick=()=>{if(v.parentNode&&v.paused){const p=v.play();if(p&&p.catch)p.catch(()=>{})}};document.addEventListener('touchstart',kick,{once:true,passive:true});document.addEventListener('click',kick,{once:true});
-        w.appendChild(v);go1()}
+        w.appendChild(v);
+        if(dm&&typeof liveURL==='string'&&liveURL){heroBlob(dm[1],u=>{if(u){v.src=u;v.load();const p=v.play&&v.play();if(p&&p.catch)p.catch(()=>{})}else go1()})}else go1()}
       const ov=document.createElement('div');ov.className='ov';w.appendChild(ov);
       const tx=document.createElement('div');tx.className='tx';
       if(h.title){const t=document.createElement('h2');t.textContent=h.title;tx.appendChild(t)}
