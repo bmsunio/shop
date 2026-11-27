@@ -414,8 +414,6 @@ footer .soc,footer .copy{flex-basis:100%;margin-top:0}.soc:empty,.copy:empty{dis
     <div class="hero">
       <h1 id="h1"></h1>
       <p id="meta"></p>
-      <ol class="steps mini" id="stepsMini" aria-label="How to order"></ol>
-      <a class="seehow" href="#how">See full ordering guide</a>
     </div>
 
     <div id="aucDash" class="aucdash" style="display:none" aria-live="polite"></div>
@@ -696,7 +694,12 @@ function paintSite(){const s=SITE||{};
   if(hb){const sig=JSON.stringify([h,LITE]);if(hb.dataset.sig!==sig){hb.dataset.sig=sig;hb.innerHTML='';
     if(h.on&&(h.video||h.poster||h.title)){const w=document.createElement('div');w.className='herob';const vu=safeU(h.video),pu=safeU(h.poster);
       if(pu){const im=document.createElement('img');im.className='pst';im.alt='';im.src=pu;w.appendChild(im)}
-      if(vu&&!LITE){const v=document.createElement('video');v.muted=true;v.defaultMuted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.preload='metadata';if(pu)v.poster=pu;v.addEventListener('error',()=>v.remove());setTimeout(()=>{if(v.parentNode&&v.readyState<2)v.remove()},12000);v.src=vu;w.appendChild(v);const p=v.play&&v.play();if(p&&p.catch)p.catch(()=>{})}
+      if(vu&&!LITE){const v=document.createElement('video');v.muted=true;v.defaultMuted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.preload='auto';if(pu)v.poster=pu;
+        const dm=vu.match(/[?&]id=([\w-]+)/)||vu.match(/\/d\/([\w-]+)/),cand=[vu];if(dm&&/google/.test(vu)){cand.push('https://drive.google.com/uc?export=download&id='+dm[1]);cand.push('https://drive.usercontent.google.com/download?id='+dm[1]+'&export=download&confirm=t')}
+        let ci=0;const go1=()=>{if(ci>=cand.length){v.remove();return}v.src=cand[ci++];v.load();const p=v.play&&v.play();if(p&&p.catch)p.catch(()=>{})};
+        v.addEventListener('error',go1);v.addEventListener('canplay',()=>{if(v.paused){const p=v.play();if(p&&p.catch)p.catch(()=>{})}});
+        const kick=()=>{if(v.parentNode&&v.paused){const p=v.play();if(p&&p.catch)p.catch(()=>{})}};document.addEventListener('touchstart',kick,{once:true,passive:true});document.addEventListener('click',kick,{once:true});
+        w.appendChild(v);go1()}
       const ov=document.createElement('div');ov.className='ov';w.appendChild(ov);
       const tx=document.createElement('div');tx.className='tx';
       if(h.title){const t=document.createElement('h2');t.textContent=h.title;tx.appendChild(t)}
@@ -734,7 +737,6 @@ function paintText(){paintClosed();paintSite();
   [['#fbTop','#fbHow',FB],['#igTop','#igHow',IG]].forEach(x=>{[x[0],x[1]].forEach(q=>{const a=$(q);if(x[2]){a.href=x[2];a.style.display=''}else a.style.display='none'})});
   $('#fbTop span').textContent=(FB&&IG)?'Facebook':'Message us';$('#igTop span').textContent=(FB&&IG)?'Instagram':'Message us';
   $('#fbTop').setAttribute('aria-label','Message us on Facebook');$('#igTop').setAttribute('aria-label','Message us on Instagram');
-  $('#stepsMini').innerHTML=stepsHTML(STEPS,1);
   $('#stepsFull').innerHTML=stepsHTML(STEPS,0);
   $('#notesBox').style.display=NOTES.length?'':'none';$('#notes').innerHTML=NOTES.map(n=>'<li>'+esc(n)+'</li>').join('');
   const upd=D.updated?String(D.updated).slice(0,10):'';
