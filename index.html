@@ -272,6 +272,103 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
 .gd h2{margin:0 0 6px;font:800 21px var(--hd)}.gd ol{margin:10px 0 14px;padding-left:20px;display:grid;gap:8px;font-size:14.5px}
 .gdck{display:flex;gap:10px;align-items:flex-start;font-weight:600;margin:6px 0 14px;cursor:pointer}.gdck input{width:20px;height:20px;margin-top:1px;accent-color:var(--ac)}
 .gdb{display:grid;gap:8px}.gdb .btn{text-align:center}.gdb .btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* announcement bar, hero video banner, you may also like, footer links */
+.herob{position:relative;margin:14px 0 4px;border-radius:16px;overflow:hidden;background:#27272a;min-height:240px;height:48vh;max-height:480px;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff}
+.herob video,.herob img.pst{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.herob .ov{position:absolute;inset:0;background:rgba(0,0,0,.38)}
+.herob .tx{position:relative;padding:20px;max-width:760px}
+.herob h2{margin:0 0 16px;font:800 clamp(30px,8vw,56px)/1.02 var(--hd);letter-spacing:-.02em;text-transform:uppercase}
+.herob .go{display:inline-block;border:1.5px solid #fff;color:#fff;background:transparent;border-radius:12px;padding:12px 28px;font:600 15px var(--bd);letter-spacing:.06em;cursor:pointer}
+.herob .go:hover{background:rgba(255,255,255,.16)}
+.also{padding:18px 16px 28px;border-top:1px solid var(--ln)}
+.also h3{margin:0 0 12px;font:800 20px var(--hd)}
+.also .ag{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.also .ac{all:unset;cursor:pointer;display:block}
+.also .ac .im{aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:var(--fill)}
+.also .ac img{width:100%;height:100%;object-fit:cover;display:block}
+.also .ac b{display:block;margin-top:8px;font:600 14px/1.3 var(--bd)}
+.also .ac span{display:block;color:var(--mu);font-size:13px;margin-top:2px}
+.soc{display:flex;gap:14px;margin-top:14px}
+.soc a{width:38px;height:38px;border-radius:50%;background:var(--fill);color:var(--tx);display:inline-flex;align-items:center;justify-content:center}
+.copy{margin:10px 0 0;color:var(--mu);font-size:13px}
+footer .soc,footer .copy{flex-basis:100%;margin-top:0}.soc:empty,.copy:empty{display:none}
+
+#acct{position:fixed;inset:0;z-index:110;display:none}#acct.on{display:block}
+.apn{position:absolute;left:0;right:0;bottom:0;max-height:88vh;overflow-y:auto;overscroll-behavior:contain;background:var(--card);color:var(--tx);border-radius:22px 22px 0 0;max-width:640px;margin:0 auto;padding:18px 18px calc(env(safe-area-inset-bottom,0px) + 22px)}
+.apn .hd2{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.apn h3{margin:0;font:800 20px var(--hd)}
+.apn .tabs{display:flex;gap:8px;margin-bottom:14px}.apn .tabs button{flex:1}
+.apn .oi{border:1px solid var(--ln);border-radius:12px;padding:12px;margin-bottom:10px}
+.apn .oi .r1{display:flex;justify-content:space-between;gap:8px;font-weight:700}.apn .oi .r2{color:var(--mu);font-size:13px;margin-top:4px}
+.apn .stb{font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--fill);white-space:nowrap}
+.apn label{display:block;font-size:13px;color:var(--mu);margin-top:10px}
+.apn input,.apn textarea,.apn select{width:100%;box-sizing:border-box;margin-top:4px;padding:10px 12px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit}
+.apn .note2{color:var(--mu);font-size:13px;margin:10px 0 0}
+
+/* ---- clean layout ---- */
+.top{border-bottom:1px solid var(--ln);background:var(--bg)}
+.bar{padding-top:12px;padding-bottom:10px;gap:12px}
+.lf{display:flex;align-items:center;gap:12px;min-width:0}
+.litebtn{flex:0 0 auto;width:40px;height:40px;padding:0;border-radius:50%;border:1px solid var(--ln);background:var(--card);color:var(--mu);display:grid;place-items:center;transition:background .15s,color .15s}
+.litebtn[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:var(--onac)}
+.litebtn[aria-pressed=true] svg{fill:currentColor}
+.logo{flex-basis:38px;width:38px;height:38px;border-radius:50%}
+.bn b{font-size:17px}
+.msgs{gap:8px;align-items:center}
+.btn.sm{min-height:40px}
+.tabs{gap:6px;padding-bottom:0}
+.tabs a{padding:10px 12px;font-size:14px}
+.page{padding:4px 0 36px}
+.hero{padding:28px 0 4px}
+.hero h1{font-size:clamp(26px,5vw,38px);max-width:22ch}
+.hero p{font-size:14.5px}
+.mini{gap:0;padding:18px 0 2px}
+.mini li{background:none;border:0;border-left:2px solid var(--ln);border-radius:0;padding:2px 14px}
+.mini li:first-child{border-left:0;padding-left:0}
+.seehow{margin-top:12px;font-size:13.5px}
+.herob{margin:18px 0 0;border-radius:var(--r)}
+.aucdash{margin:20px 0 0;border-radius:var(--r)}
+.tools{margin:26px 0 8px;gap:12px}
+.search input{height:46px;border-radius:999px;border-color:transparent;background:var(--card);box-shadow:0 0 0 1px var(--ln)}
+.search input:focus{outline:0;box-shadow:0 0 0 2px var(--ac)}
+.ctrl select{height:42px;border-radius:999px;padding:0 14px}
+.chips{gap:6px}
+.chip,.tgb{min-height:36px;padding:6px 14px;font-size:13.5px;box-shadow:none}
+.cnt{margin:14px 2px 14px;font-size:13px}
+@media(min-width:760px){.tools{grid-template-columns:minmax(0,1fr) auto;align-items:center}.tools .chips{grid-column:1}.tools .ctrl{grid-column:2;grid-template-columns:auto auto}.tools .tg{grid-column:1/-1}}
+.grid{gap:22px 12px}
+@media(min-width:700px){.grid{gap:30px 18px}}
+.card{background:none;box-shadow:none;border-radius:0;overflow:visible}
+.card:active{transform:none}
+.ph{border-radius:var(--r)}
+.pt{left:10px;bottom:10px;padding:4px 12px;border-radius:999px;clip-path:none;font-size:15px}
+.pt::before{display:none}
+.ci{padding:10px 2px 0}
+.ci .ti{font-size:14.5px}
+.ci .mt{margin-top:3px}
+.heart{right:10px;top:10px;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.bd{left:10px;top:10px}
+.page>h2{margin:26px 0 6px}
+
+/* ---- frozen search + right-corner lite ---- */
+.lf{flex:1 1 auto}
+.searchbar{position:sticky;top:var(--hh,64px);z-index:25;padding:12px 0 10px;background:var(--bg);box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax)}
+.tools{margin:10px 0 8px}
+.msgs .litebtn{margin-left:2px}
+.seg{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--ln);border-radius:999px;background:var(--card)}
+.seg button{border:0;background:none;color:var(--mu);border-radius:999px;padding:5px 13px;min-height:32px;font-size:13.5px;font-weight:600}
+.seg button[aria-pressed=true]{background:var(--ac);color:var(--onac)}
+/* ---- my account panel: backdrop + centered dialog on computers ---- */
+#acct .ov{position:absolute;inset:0;background:rgba(5,15,14,.6)}
+#acct .apn .tabs{position:static;z-index:auto;background:none;border:0;box-shadow:none;padding:0;overflow:visible}
+.apn .tabs button{min-height:42px}
+.apn .oi{background:var(--bg)}
+.apn input,.apn textarea,.apn select{min-height:44px}
+@media(min-width:760px){
+.apn{left:50%;right:auto;top:50%;bottom:auto;transform:translate(-50%,-50%);width:min(560px,92vw);max-width:none;max-height:86vh;margin:0;padding:26px 28px 28px;border-radius:22px;border:1px solid var(--ln);box-shadow:0 28px 70px -14px rgba(0,0,0,.5)}
+.apn h3{font-size:22px}
+.apn .hd2{margin-bottom:16px}
+}
 </style>
 </head>
 <body>
@@ -279,15 +376,19 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
 
 <header class="top">
   <div class="wrap bar">
-    <a class="brand" href="#shop" aria-label="Home">
-      <span class="logo" id="logo"></span>
-      <span class="bn"><b id="store">Our Shop</b><small id="owner"></small></span>
-    </a>
+    <div class="lf">
+      <a class="brand" href="#shop" aria-label="Home">
+        <span class="logo" id="logo"></span>
+        <span class="bn"><b id="store">Our Shop</b><small id="owner"></small></span>
+      </a>
+    </div>
     <div class="msgs">
       <button type="button" id="thm" class="btn sm g ic" aria-label="Switch light or dark mode"></button>
+      <button type="button" id="acctBtn" class="btn sm g ic" aria-label="My orders and profile"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button>
       <a id="cartBtn" href="#cart" class="btn sm cartb" aria-label="Open cart"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span>Cart</span><i class="cb" id="cartN" style="display:none">0</i></a>
       <a id="fbTop" class="btn sm" target="_blank" rel="noopener" style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12z"/></svg><span>Message us</span></a>
       <a id="igTop" class="btn sm" target="_blank" rel="noopener" style="display:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg><span>Message us</span></a>
+      <button type="button" class="litebtn" id="tgLite" aria-pressed="false" aria-label="Lite mode" title="Lite mode: uses less internet data"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></button>
     </div>
   </div>
   <nav class="wrap tabs" aria-label="Pages">
@@ -302,6 +403,14 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
 
   <!-- SHOP -->
   <section id="p-shop" class="page">
+    <div class="searchbar">
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <label class="sr" for="q">Search items</label>
+        <input id="q" type="search" placeholder="Search brand, item or size" autocomplete="off">
+      </div>
+    </div>
+    <div id="heroB"></div>
     <div class="hero">
       <h1 id="h1"></h1>
       <p id="meta"></p>
@@ -311,11 +420,6 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
 
     <div id="aucDash" class="aucdash" style="display:none" aria-live="polite"></div>
     <div class="tools">
-      <div class="search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <label class="sr" for="q">Search items</label>
-        <input id="q" type="search" placeholder="Search brand, item or size" autocomplete="off">
-      </div>
       <div class="chips" id="chips"></div>
       <div class="ctrl">
         <select id="size" aria-label="Size"><option value="">All sizes</option></select>
@@ -326,8 +430,7 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
         </select>
       </div>
       <div class="tg">
-        <button type="button" class="tgb" id="tgRes" aria-pressed="false">For sale only</button>
-        <button type="button" class="tgb" id="tgLite" aria-pressed="false" title="Uses less internet data">Lite mode</button>
+        <div class="seg" id="seg" role="group" aria-label="Availability"><button type="button" data-stock="" aria-pressed="true">All</button><button type="button" data-stock="in" aria-pressed="false">In stock</button><button type="button" data-stock="out" aria-pressed="false">Out of stock</button></div>
         <button type="button" class="tgb" id="tgSaved" aria-pressed="false">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20.5s-7-4.4-9.3-9.1A5.4 5.4 0 0 1 12 6.3a5.4 5.4 0 0 1 9.3 5.1C19 16.1 12 20.5 12 20.5z"/></svg>
           Saved <span id="svN"></span>
@@ -400,8 +503,11 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
   <div class="wrap">
     <a class="brand" href="#shop"><span class="logo" id="logoF"></span><span class="bn"><b id="storeF"></b><small id="foot"></small></span></a>
     <nav><a href="#shop">Shop</a><a href="#how">How to order</a><a href="#terms">Terms &amp; policies</a></nav>
+    <div class="soc" id="soc"></div><p class="copy" id="copy"></p>
   </div>
 </footer>
+
+<div id="acct" role="dialog" aria-modal="true" aria-label="My orders and profile"><div class="ov" id="acctOv"></div><div class="apn" id="acctPn"></div></div>
 
 <div id="sheet" role="dialog" aria-modal="true" aria-label="Item details">
   <div class="bk" id="shBk"></div>
@@ -437,7 +543,7 @@ footer nav a{margin-right:14px;text-decoration:none;font-weight:600}
 <script>
 /* Backup text. Only used when shop-data.js has no value for these. */
 var CONFIG={
-  live:'https://script.google.com/macros/s/AKfycbzdGACuQILwwr57yWNX50IuCAS6_idJSjZCT4dM-thHKMcWmw3RduOB81yXe0QyRt8/exec',            // optional: your Apps Script link (the shop-data.js from the app already carries it)
+  live:'https://script.google.com/macros/s/AKfycbxtJvN-p04E9t7wSgMap-w2ZIriN0zUi4lCXqb_zIRl3c0lc8OsL9815rf5xi6OdgIW/exec',            // optional: your Apps Script link (the shop-data.js from the app already carries it)
   store:'Our Shop',
   tagline:'Preloved finds, one of a kind',
   currency:'₱',
@@ -489,7 +595,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 let D,demo,CUR,STORE,OWNER,LOGO,FB,IG,TAG,STEPS,NOTES,TERMS,items,ini,liveURL='',liveState='';
 const ACCENTS={blue:['#2563eb','#60a5fa'],purple:['#7c3aed','#a78bfa'],rose:['#e11d48','#fb7185'],orange:['#ea580c','#fb923c'],teal:['#0f766e','#2dd4bf']};
 function applyAccent(k){let e=document.getElementById('accCss');const a=ACCENTS[k];if(!a){if(e)e.remove();return}if(!e){e=document.createElement('style');e.id='accCss';document.head.appendChild(e)}e.textContent=':root{--ac:'+a[0]+';--onac:#fff}@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--ac:'+a[1]+';--onac:#111}}:root[data-theme=dark]{--ac:'+a[1]+';--onac:#111}'}
-let CLOSED=false,CLOSEDMSG='',POP=null,SOLDAMT=true;
+let CLOSED=false,CLOSEDMSG='',POP=null,SOLDAMT=true,SITE=null;
 function setData(src){
   D=src||{};demo=false;
   if(!D.items||!D.items.length){
@@ -501,7 +607,7 @@ function setData(src){
   STORE=D.store||CONFIG.store||'Our Shop';
   OWNER=D.owner||'';LOGO=D.logo||'';FB=D.fb||'';IG=D.ig||'';
   TAG=D.tagline||CONFIG.tagline||'';
-  CLOSED=!!D.closed;CLOSEDMSG=String(D.closedMsg||'');POP=D.popup&&typeof D.popup==='object'?Object.assign({},CONFIG.popup||{},D.popup):CONFIG.popup;SOLDAMT=D.soldAmt!==false;
+  CLOSED=!!D.closed;CLOSEDMSG=String(D.closedMsg||'');POP=D.popup&&typeof D.popup==='object'?Object.assign({},CONFIG.popup||{},D.popup):CONFIG.popup;SOLDAMT=D.soldAmt!==false;SITE=D.site&&typeof D.site==='object'?D.site:null;
   STEPS=(CONFIG.useAppSteps&&D.steps&&D.steps.length?D.steps:CONFIG.steps);
   NOTES=(CONFIG.useAppSteps&&D.notes&&D.notes.length?D.notes:CONFIG.notes);
   TERMS=(D.terms&&D.terms.length?D.terms:CONFIG.terms);
@@ -580,9 +686,45 @@ let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on
 function drawLogo(el){el.innerHTML=LOGO?'<img src="'+esc(LOGO)+'" alt="" data-i="'+esc(ini)+'" onerror="this.parentNode.textContent=this.dataset.i">':esc(ini)}
 const stepHTML=(s,i)=>'<li><div class="n">'+(i+1)+'</div><div><b>'+esc(s[0])+'</b><span>'+esc(s[1]||'')+'</span></div></li>';
 function stepsHTML(a,mini){let n=0,sec=0,o='';a.forEach(s=>{const t=String(s[0]);if(t.charAt(0)==='#'){n=0;sec++;if(!mini)o+='<li class="hd">'+esc(t.replace(/^#+\s*/,''))+'</li>';return}if(mini&&sec>1)return;o+=stepHTML(s,n++)});return o}
+function safeU(u){u=String(u||'').trim();return /^(https?:\/\/[^\s"'<>]+|[\w\-./%]+)$/i.test(u)?u:''}
+const SOC_IC={fb:'<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.3 0-3.9 1.4-3.9 4v2.2H8v3h2.5V21z"/></svg>',ig:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg>',tt:'<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.3 2.2 1.6 3.6 3.7 3.8v3c-1.3.1-2.5-.3-3.7-1.1v5.6c0 3.5-2.5 5.7-5.5 5.7-3 0-5.4-2.3-5.4-5.3 0-3.2 2.7-5.5 6-5.1v3.1c-1.5-.4-2.9.5-2.9 2 0 1.2 1 2.2 2.2 2.2 1.4 0 2.3-.9 2.3-2.5V3z"/></svg>'};
+const SOC_NM={fb:'Facebook',ig:'Instagram',tt:'TikTok'};
+function paintSite(){const s=SITE||{};
+  let b=document.getElementById('annBar');if(!b){b=document.createElement('div');b.id='annBar';b.setAttribute('role','note');b.style.cssText='background:#18181b;color:#fff;text-align:center;font-weight:700;letter-spacing:.04em;font-size:13px;padding:9px 14px';const t=document.querySelector('header.top');document.body.insertBefore(b,t)}
+  const a=s.ann||{};if(a.on){b.style.display='';b.textContent=a.text||''}else b.style.display='none';
+  const h=s.hero||{},hb=document.getElementById('heroB');
+  if(hb){const sig=JSON.stringify([h,LITE]);if(hb.dataset.sig!==sig){hb.dataset.sig=sig;hb.innerHTML='';
+    if(h.on&&(h.video||h.poster||h.title)){const w=document.createElement('div');w.className='herob';const vu=safeU(h.video),pu=safeU(h.poster);
+      if(pu){const im=document.createElement('img');im.className='pst';im.alt='';im.src=pu;w.appendChild(im)}
+      if(vu&&!LITE){const v=document.createElement('video');v.muted=true;v.defaultMuted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.preload='metadata';if(pu)v.poster=pu;v.addEventListener('error',()=>v.remove());setTimeout(()=>{if(v.parentNode&&v.readyState<2)v.remove()},12000);v.src=vu;w.appendChild(v);const p=v.play&&v.play();if(p&&p.catch)p.catch(()=>{})}
+      const ov=document.createElement('div');ov.className='ov';w.appendChild(ov);
+      const tx=document.createElement('div');tx.className='tx';
+      if(h.title){const t=document.createElement('h2');t.textContent=h.title;tx.appendChild(t)}
+      const g=document.createElement('button');g.type='button';g.className='go';g.textContent=h.btn||'';g.onclick=()=>{const gr=document.getElementById('grid');if(gr)gr.scrollIntoView({behavior:'smooth',block:'start'})};tx.appendChild(g);
+      w.appendChild(tx);hb.appendChild(w)}}}
+  const f=s.foot||{},soc=document.getElementById('soc'),cp=document.getElementById('copy');
+  if(soc){soc.innerHTML='';if(f.on!==false)['fb','ig','tt'].forEach(k=>{const u=/^https?:\/\//i.test(String(f[k]||'').trim())?String(f[k]).trim():'';if(!u)return;const l=document.createElement('a');l.href=u;l.target='_blank';l.rel='noopener noreferrer';l.setAttribute('aria-label',SOC_NM[k]);l.innerHTML=SOC_IC[k];soc.appendChild(l)})}
+  if(cp){cp.textContent=f.on!==false&&f.text?f.text:''}}
+function alsoH(i){const w=(SITE&&SITE.also)||{};if(w.on===false||!SITE)return'';const n=Math.max(2,Math.min(8,+w.n||4));
+  const L=items.filter(x=>x.id!==i.id&&stOf(x)!=='sold'&&showSt(x)).sort((a,b)=>(b.category===i.category)-(a.category===i.category)).slice(0,n);if(!L.length)return'';
+  return'<div class="also"><h3>'+esc(w.title||'You may also like')+'</h3><div class="ag">'+L.map(x=>{const im=x.thumb||(x.photos&&x.photos[0]);return'<button type="button" class="ac" data-also="'+esc(x.id)+'"><div class="im">'+(im&&!LITE?'<img loading="lazy"'+ia(im,320)+' alt="">':'')+'</div><b>'+esc([x.brand,x.title].filter(Boolean).join(' '))+'</b><span>'+ptText(x,0)+'</span></button>'}).join('')+'</div></div>'}
+let acctTab='o';
+function stTxt(no,at){const s=myStat[no];if(!s)return Date.now()-(+at||0)>2*864e5?'Closed':'Checking…';if(s.ob)return'Outbid';return s.s==='Pending'?'Waiting for review':s.s==='Accepted'?'Accepted':s.s==='Denied'?'Denied':String(s.s||'')}
+function acctOpen(){acctTab='o';$('#acct').classList.add('on');document.body.style.overflow='hidden';acctDraw();loadMyBids()}
+function acctClose(){$('#acct').classList.remove('on');if(!$('#sheet').classList.contains('on'))document.body.style.overflow=''}
+function acctDraw(){const a=$('#acct');if(!a||!a.classList.contains('on'))return;
+  const L=myOrds.map(x=>({k:'o',no:x.no,at:+x.at||0,x:x})).concat(myBids.map(x=>({k:'b',no:x.no,at:+x.at||0,x:x}))).sort((p,q)=>q.at-p.at);
+  let h='<div class="hd2"><h3>My account</h3><button type="button" class="btn sm g" data-a="x">Close</button></div><div class="tabs"><button type="button" class="btn sm'+(acctTab==='o'?'':' g')+'" data-a="o">Orders'+(L.length?' ('+L.length+')':'')+'</button><button type="button" class="btn sm'+(acctTab==='p'?'':' g')+'" data-a="p">Profile</button></div>';
+  if(acctTab==='o'){
+    h+=L.length?L.map(r=>{const d=r.at?new Date(r.at).toLocaleDateString(undefined,{month:'short',day:'numeric'}):'';
+      if(r.k==='o'){const its=(r.x.items||[]),sm=its.slice(0,2).map(t=>esc(t.t)+(t.q>1?' x '+t.q:'')).join(', ')+(its.length>2?' +'+(its.length-2)+' more':'');return'<div class="oi"><div class="r1"><span>Order '+esc(r.no)+'</span><span class="stb">'+esc(stTxt(r.no,r.at))+'</span></div><div class="r2">'+[d,sm,r.x.total?money(r.x.total):''].filter(Boolean).join(' · ')+'</div></div>'}
+      const it=byId(r.x.item),nm=it?[it.brand,it.title].filter(Boolean).join(' '):'Item '+r.x.item;return'<div class="oi"><div class="r1"><span>Bid '+esc(r.no)+'</span><span class="stb">'+esc(stTxt(r.no,r.at))+'</span></div><div class="r2">'+[d,esc(nm),money(r.x.amt)].filter(Boolean).join(' · ')+'</div></div>'}).join(''):'<p class="note2">No orders or bids from this phone yet.</p>';
+    h+='<label>Have an order or bid code? Add it here to check its status<input id="acCode" placeholder="ORD-261126-ABCD" autocapitalize="characters"></label><div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="btn sm" data-a="add">Check status</button>'+(L.length?'<button type="button" class="btn sm g" data-a="clr">Clear list</button>':'')+'</div><p class="note2">Only the status is shown here. We will message you about payment and shipping after we accept an order.</p>'}
+  else{h+='<label>Name<input id="apN" value="'+esc(cust.name||'')+'" autocomplete="name"></label><label>Contact number<input id="apP" value="'+esc(cust.phone||'')+'" inputmode="tel" autocomplete="tel"></label><label>Where do you message us?<select id="apF"><option'+(cust.plat==='Instagram'?'':' selected')+'>Facebook</option><option'+(cust.plat==='Instagram'?' selected':'')+'>Instagram</option></select></label><label>Your Facebook or Instagram account<input id="apA" value="'+esc(cust.acct||'')+'"></label><label>Complete address<textarea id="apD" rows="3">'+esc(cust.addr||'')+'</textarea></label><div style="display:flex;gap:8px;margin-top:12px"><button type="button" class="btn sm" data-a="save">Save details</button><button type="button" class="btn sm g" data-a="wipe">Clear saved details</button></div><p class="note2">Saved only on this phone. It fills in your next order for you.</p>'}
+  $('#acctPn').innerHTML=h}
 function paintClosed(){let b=document.getElementById('closedBar');if(!b){b=document.createElement('div');b.id='closedBar';b.setAttribute('role','status');b.style.cssText='background:#b91c1c;color:#fff;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));text-align:center;font-weight:600;font-size:14px;line-height:1.4';document.body.insertBefore(b,document.body.firstChild)}
   if(CLOSED){b.style.display='';b.textContent=CLOSEDMSG||'We are closed right now. You can still browse, but orders and bids are paused. Please check back soon.'}else b.style.display='none'}
-function paintText(){paintClosed();
+function paintText(){paintClosed();paintSite();
   document.title=STORE+(TAG?' | '+TAG:'');
   $('#store').textContent=$('#storeF').textContent=STORE;
   $('#owner').textContent=OWNER;
@@ -615,7 +757,7 @@ function showPage(p){
 }
 
 /* ---------- filters + list ---------- */
-const F={q:'',cat:'',size:'',sort:'new',hideRes:false,saved:false,auc:false};
+const F={q:'',cat:'',size:'',sort:'new',stock:'',saved:false,auc:false};
 /* Lite mode: no grid photos, one photo per item until the buyer asks for more. Starts on for Data Saver or 2G. */
 let LITE=false;try{const v=localStorage.getItem('shop-lite'),cn=navigator.connection||{};LITE=v==='1'||(v===null&&(!!cn.saveData||/^(slow-2g|2g)$/.test(cn.effectiveType||'')))}catch(e){}
 const LITE_OPEN={};let SOLDN=40;
@@ -639,7 +781,7 @@ function filtered(){
   const r=items.filter(i=>{
     if(F.cat&&i.category!==F.cat)return false;
     if(F.size&&String(i.size)!==F.size)return false;
-    if(F.auc&&(stOf(i)!=='auction'||(F.auc!==true&&aucKey(i)!==F.auc)))return false; if(F.hideRes&&!canBuy(i))return false;
+    if(F.auc&&(stOf(i)!=='auction'||(F.auc!==true&&aucKey(i)!==F.auc)))return false; if(F.stock&&(F.stock==='in')!==inSt(i))return false;
     if(F.saved&&!isSaved(i.id))return false;
     if(q.length){const h=[i.title,i.brand,i.category,i.size,i.condition,i.id].join(' ').toLowerCase();if(!q.every(w=>h.indexOf(w)>-1))return false}
     return true});
@@ -648,7 +790,7 @@ function filtered(){
 const isNew=i=>{const t=Date.parse(i.added);return t&&Date.now()-t<=7*864e5&&Date.now()>=t};
 const heartSVG='<svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 20.5s-7-4.4-9.3-9.1A5.4 5.4 0 0 1 12 6.3a5.4 5.4 0 0 1 9.3 5.1C19 16.1 12 20.5 12 20.5z"/></svg>';
 function drawGrid(){ paintDash();
-  const r=filtered(),active=F.q||F.cat||F.size||F.hideRes||F.saved||F.auc;
+  const r=filtered(),active=F.q||F.cat||F.size||F.stock||F.saved||F.auc;
   $('#count').textContent=r.length+' item'+(r.length===1?'':'s')+(items.length!==r.length?' of '+items.length:'');
   $('#clear').style.display=active?'':'none';
   $('#empty').style.display=r.length?'none':'block';
@@ -663,17 +805,26 @@ function drawGrid(){ paintDash();
       '<div class="ci"><div class="br">'+esc(i.brand||'')+'</div><div class="ti">'+esc(i.title)+'</div><div class="mt">'+esc([i.size&&'Size '+i.size,(i.w&&i.l)?i.w+' × '+i.l+' in':'',i.condition].filter(Boolean).join(' · '))+'</div></div></button>'+
       '<button type="button" class="heart" data-h="'+esc(i.id)+'" aria-pressed="'+sv+'" aria-label="'+(sv?'Remove from saved':'Save item')+'">'+heartSVG+'</button>'+addBtn(i)+'</div>'}).join('');
 }
-function sync(){drawChips();drawGrid();$('#tgSaved').setAttribute('aria-pressed',F.saved);$('#tgRes').setAttribute('aria-pressed',F.hideRes);$('#tgLite').setAttribute('aria-pressed',LITE)}
+function sync(){drawChips();drawGrid();$('#tgSaved').setAttribute('aria-pressed',F.saved);document.querySelectorAll('#seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.stock===F.stock));$('#tgLite').setAttribute('aria-pressed',LITE)}
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;F.cat=b.dataset.c;sync()});
-$('#q').addEventListener('input',e=>{F.q=e.target.value;drawGrid();$('#clear').style.display=(F.q||F.cat||F.size||F.hideRes||F.saved||F.auc)?'':'none'});
+$('#q').addEventListener('input',e=>{F.q=e.target.value;drawGrid();$('#clear').style.display=(F.q||F.cat||F.size||F.stock||F.saved||F.auc)?'':'none'});
 $('#sort').addEventListener('change',e=>{F.sort=e.target.value;drawGrid()});
 $('#size').addEventListener('change',e=>{F.size=e.target.value;drawGrid()});
-$('#tgRes').onclick=()=>{F.hideRes=!F.hideRes;sync()};
+function inSt(i){const t=stOf(i);return t!=='sold'&&t!=='reserved'}
+$('#seg').onclick=e=>{const b=e.target.closest('button[data-stock]');if(!b)return;F.stock=b.dataset.stock;sync();$('#clear').style.display=(F.q||F.cat||F.size||F.stock||F.saved||F.auc)?'':'none'};
 $('#tgSaved').onclick=()=>{F.saved=!F.saved;sync()};
-$('#tgLite').onclick=()=>{LITE=!LITE;try{localStorage.setItem('shop-lite',LITE?'1':'0')}catch(e){}sync();toast(LITE?'Lite mode on. Photos load only when you ask.':'Lite mode off.')};
+$('#acctBtn').onclick=acctOpen;$('#acctOv').onclick=acctClose;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#acct').classList.contains('on'))acctClose()});
+$('#acctPn').addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a;
+  if(a==='x')acctClose();else if(a==='o'||a==='p'){acctTab=a;acctDraw()}
+  else if(a==='save'){cust={name:$('#apN').value.trim(),phone:$('#apP').value.trim(),plat:$('#apF').value,acct:$('#apA').value.trim(),addr:$('#apD').value.trim()};try{localStorage.setItem(UK,JSON.stringify(cust))}catch(x){}toast('Details saved on this phone')}
+  else if(a==='wipe'){cust={};try{localStorage.removeItem(UK)}catch(x){}acctDraw();toast('Saved details cleared')}
+  else if(a==='clr'){myOrds=[];myBids=[];saveOrds();saveMy();acctDraw()}
+  else if(a==='add'){const v=String($('#acCode').value||'').trim().toUpperCase();if(!/^(ORD|BID)-[0-9A-Z-]{4,30}$/.test(v)){toast('That code does not look right');return}if(myOrds.some(x=>x.no===v)||myBids.some(x=>x.no===v)){toast('Already in your list');return}if(v.indexOf('BID-')===0)myBids.push({no:v,item:'',amt:0,at:Date.now()});else myOrds.push({no:v,at:Date.now(),total:0,items:[]});saveOrds();saveMy();acctDraw();loadMyBids()}});
+$('#tgLite').onclick=()=>{LITE=!LITE;try{localStorage.setItem('shop-lite',LITE?'1':'0')}catch(e){}sync();paintSite();toast(LITE?'Lite mode on. Photos load only when you ask.':'Lite mode off.')};
 $('#moreSoldBtn').onclick=()=>{SOLDN+=40;drawGrid()};
-document.addEventListener('click',e=>{const b=e.target.closest('[data-litemore]');if(b){LITE_OPEN[b.dataset.litemore]=1;openItem(b.dataset.litemore,false)}});
-$('#clear').onclick=()=>{Object.assign(F,{q:'',cat:'',size:'',hideRes:false,saved:false,auc:false});$('#q').value='';$('#size').value='';sync()};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-litemore]');if(b){LITE_OPEN[b.dataset.litemore]=1;openItem(b.dataset.litemore,false)}const ao=e.target.closest('[data-also]');if(ao)openItem(ao.dataset.also)});
+$('#clear').onclick=()=>{Object.assign(F,{q:'',cat:'',size:'',stock:'',saved:false,auc:false});$('#q').value='';$('#size').value='';sync()};
 $('#grid').addEventListener('click',e=>{
   const ad=e.target.closest('.addq');if(ad){if(ad.dataset.o){openItem(ad.dataset.o);return}if(inCart(ad.dataset.a))setHash('cart');else addCart(ad.dataset.a);return}
   const h=e.target.closest('.heart');if(h){toggleSaved(h.dataset.h);return}
@@ -696,7 +847,7 @@ function openItem(id,push){
    '<div class="det"><h2>'+esc(name)+'</h2><div class="pr"><span class="big"'+''+'>'+ptText(i,1)+'</span><span class="st '+stCls(i)+'">'+stLabel(i)+'</span></div>'+
    (flaw?'<div class="flaw"><b>Flaws:</b> '+flaw+'</div>':'')+
    '<div class="rows">'+row('Size',esc(i.size))+row('Brand',esc(i.brand))+row('Category',esc(i.category))+row('Condition',esc(i.condition))+row('Width',i.w?esc(i.w)+' in':'')+row('Length',i.l?esc(i.l)+' in':'')+row('Item code',esc(i.id))+'</div>'+
-   aucBox(i)+(stOf(i)==='auction'?bidForm(i):'')+'<div class="order"'+(stOf(i)==='auction'?' style="display:none"':'')+'><h3>Want this item?</h3><div class="cta" id="addw"></div><p class="note" style="margin:10px 0 0">'+orderNote(i)+'</p></div></div></div>';
+   aucBox(i)+(stOf(i)==='auction'?bidForm(i):'')+'<div class="order"'+(stOf(i)==='auction'?' style="display:none"':'')+'><h3>Want this item?</h3><div class="cta" id="addw"></div><p class="note" style="margin:10px 0 0">'+orderNote(i)+'</p></div></div></div>'+alsoH(i);
   $('#sheet').classList.add('on');document.body.style.overflow='hidden';$('#shPn').scrollTop=0;
   if(push!==false)setHash('item-'+encodeURIComponent(i.id));
   wireSheet(ph);
@@ -744,18 +895,20 @@ const stCls=i=>({sold:'sold',reserved:'res',auction:'auc'})[stOf(i)]||'';
 const stLabel=i=>({sold:'Sold',reserved:'Reserved',auction:'In auction'})[stOf(i)]||(i.qty>1||(i.sn&&soldOn())?'Available · '+i.qty+' left'+(i.sn&&soldOn()?' · '+i.sn+' sold':''):'Available');
 /* ---------- my bids on this device: so a bidder can see what happened to them ---------- */
 const MK='shop-bids';let myBids=[],myStat={};
+const OKEY='shop-ords';let myOrds=[];try{myOrds=JSON.parse(localStorage.getItem(OKEY)||'[]');if(!Array.isArray(myOrds))myOrds=[]}catch(e){myOrds=[]}
+const saveOrds=()=>{try{localStorage.setItem(OKEY,JSON.stringify(myOrds.slice(-30)))}catch(e){}};
 try{myBids=JSON.parse(localStorage.getItem(MK)||'[]')}catch(e){}
 myBids=(Array.isArray(myBids)?myBids:[]).filter(x=>x&&x.no&&Date.now()-(+x.at||0)<60*864e5).slice(-30);
 const saveMy=()=>{try{localStorage.setItem(MK,JSON.stringify(myBids))}catch(e){}};
 function loadMyBids(){
-  if(!liveURL||!myBids.length)return;
+  if(!liveURL||(!myBids.length&&!myOrds.length))return;
   const fn='bidSt'+Date.now(),sc=document.createElement('script');let done=false;
   const end=()=>{if(done)return;done=true;sc.remove();try{delete window[fn]}catch(e){}};
   window[fn]=r=>{if(done)return;end();const st=(r&&r.st)||{},was=JSON.stringify(myStat);myStat=st;
     const keep=myBids.filter(x=>st[x.no]||Date.now()-(+x.at||0)<120000);if(keep.length!==myBids.length){myBids=keep;saveMy()}
-    if(JSON.stringify(myStat)!==was)refreshAuc()};
+    if(JSON.stringify(myStat)!==was){refreshAuc();acctDraw()}};
   sc.onerror=end;setTimeout(end,15000);
-  sc.src=liveURL+(liveURL.indexOf('?')>-1?'&':'?')+'action=bidstatus&nos='+encodeURIComponent(myBids.slice(-20).map(x=>x.no).join(','))+'&callback='+fn+'&t='+Date.now();
+  sc.src=liveURL+(liveURL.indexOf('?')>-1?'&':'?')+'action=bidstatus&nos='+encodeURIComponent(myBids.concat(myOrds).slice(-20).map(x=>x.no).join(','))+'&callback='+fn+'&t='+Date.now();
   document.head.appendChild(sc)}
 const waitTop=i=>{const a=i.auc||{};return Math.max(0,...(Array.isArray(a.wait)?a.wait:[]).map(x=>+x.a||0))};
 const bidHint=i=>{const w=waitTop(i),a=i.auc||{};return w>0&&w>(+a.hi||0)?'A '+money(w)+' bid is waiting. Bid above it to be sure.':''};
@@ -970,6 +1123,7 @@ async function makeSlip(){if(CLOSED){toast('The shop is closed right now, so we 
     const r=await sendOrder({type:'order',name:nm,phone:ph,addr:ad,plat:pf,acct:tl,ids:L2.map(x=>x.i.id),lines:L2.map(x=>({id:x.i.id,q:x.q}))},'cWeb');
     if(!r.ok){delete btn.dataset.busy;btn.disabled=false;btn.textContent='Place my order';const m=ordFail(r);er.style.display='block';er.textContent=m;return}
     o.no=r.no;o.saved=true;if(r.total)o.total=r.total;
+    myOrds.push({no:r.no,at:Date.now(),total:+o.total||0,items:L2.map(x=>({t:[x.i.brand,x.i.title].filter(Boolean).join(' ').slice(0,60),q:x.q}))});saveOrds();setTimeout(loadMyBids,1500);
     btn.textContent='Order sent ✓';
     $('#slipH').textContent='Order received: '+o.no;
     $('#slipTx').textContent='Our team will review your order first. Please save this image and send it to our official Facebook page as proof that you ordered. Your order is confirmed only after we accept it. We will then message you the shipping fee and payment details.';
@@ -1061,5 +1215,6 @@ setInterval(()=>{if(!document.hidden)loadLive(true)},60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadLive(true)});
 })();
 </script>
+<script>(function(){var t=document.querySelector('.top');if(!t)return;function f(){document.documentElement.style.setProperty('--hh',Math.round(t.getBoundingClientRect().height)+'px')}f();addEventListener('resize',f);addEventListener('load',f);if(window.ResizeObserver)new ResizeObserver(f).observe(t)})()</script>
 </body>
 </html>
